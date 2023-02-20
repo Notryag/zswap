@@ -1,23 +1,43 @@
 import { useWeb3React } from "@web3-react/core"
-import { InjectedConnector } from '@web3-react/injected-connector'
+import { injected } from "@/scripts/connectors"
 
 
 export default function WalletConnect() {
   const context = useWeb3React()
   const { connector, library, chainId, account, activate, deactivate, active, error } = context
-  console.log('%c [ content ]-6', 'font-size:13px; background:pink; color:#bf2c9f;', context)
 
+  const connect = async () => {
+    try {
+      await activate(injected)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
-
-  const handleClick = () => {
-    activate()
+  const disConnect = () => {
+    try {
+      deactivate()
+    } catch (ex) {
+      console.log(ex)
+    }
   }
 
   return (
     <div>
-      connect
-      <button onClick={handleClick}> connect </button>
+      <div className="header">
+        <div></div>
+        <div>
+          <button onClick={connect}>connect</button>
+        </div>
+      </div>
+      <div className="container">
+        <div className="wrap">
+          <div></div>
+          <div></div>
+          <div></div>
+          <button></button>
+        </div>
+      </div>
     </div>
   )
 }
